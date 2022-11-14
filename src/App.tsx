@@ -1,14 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Cell } from './components/cell';
-import { Grid } from './components/grid';
+import React from "react";
+import logo from "./logo.svg";
+import { Cell } from "./components/cell";
+import { Grid } from "./components/grid";
 
 function App() {
-  return (
-    <>
-      <Grid />
-    </>
-  );
+	return (
+		<>
+			<Grid />
+		</>
+	);
 }
 
 export default App;
