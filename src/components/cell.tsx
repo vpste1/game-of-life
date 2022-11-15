@@ -11,10 +11,9 @@ interface CellSpanProps {
 
 const StyledCell = styled.span<CellSpanProps>`
   display: block;
-  height: 10px;
-  width: 10px;
-  border: 2px solid blue;
-  margin: 2px;
+  height: 4px;
+  width: 4px;
+  border: 2px solid white;
   background-color: ${(props) => (props.isActive ? "blue" : "white")}
 `;
 

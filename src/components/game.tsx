@@ -3,12 +3,34 @@ import styled from "styled-components";
 import { useCallback, useState } from "react";
 import { countNumberOfNeighbours } from "../utils/grid_helper";
 
-const CellRow = styled.div`
-  display: flex;
-  `;
-
 const ROW_COUNT = 50;
 const COL_COUNT = 50;
+
+const GameContainer = styled.div`
+	margin: 0 auto;
+`;
+
+const GridContainer = styled.div`
+	border: 1px solid blue;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+`;
+
+const CellRow = styled.div`
+  display: flex;
+	width: ${ROW_COUNT * 8}px
+  `;
+
+const Button = styled.button`
+	border: 1px solid blue;
+	color: blue;
+	background: none;
+	margin: 16px 40px;
+`;
 
 const EMPTY_ROW = new Array(COL_COUNT).fill(false);
 let EMPTY_GRID: boolean[][] = [];
@@ -23,8 +45,10 @@ EMPTY_GRID[2][2] = true;
 EMPTY_GRID[2][3] = true;
 EMPTY_GRID[2][4] = true;
 
-export const Grid = () => {
+export const Game = () => {
 	const [currentGrid, setCurrentGrid] = useState(EMPTY_GRID);
+	const [isRunning, setIsRunning] = useState(false);
+	const [simId, setSimId] = useState<NodeJS.Timer>();
 
 	const newCreateNextGrid = useCallback(
 		(existingGrid: boolean[][]) =>
@@ -55,10 +79,14 @@ export const Grid = () => {
 		setCurrentGrid(newCreateNextGrid);
 	};
 
-	// TODO: This isn't great, ideally would have an interval being set (with a custom hook)
-	const runSim = () => {
-		setNextStep();
-		setTimeout(runSim, 100);
+	const startSim = () => {
+		setIsRunning(true);
+		setSimId(setInterval(setNextStep, 100));
+	};
+
+	const stopSim = () => {
+		setIsRunning(false);
+		clearInterval(simId);
 	};
 
 	const onDrawGrid = (
@@ -72,22 +100,28 @@ export const Grid = () => {
 	};
 
 	return (
-		<div>
-			{currentGrid.map((row, rowCoord) => (
-				<CellRow key={`row-${rowCoord}`}>
-					{row.map((cellIsActive, colCoord) => (
-						<Cell
-							key={`cell-${rowCoord}-${colCoord}`}
-							isActive={cellIsActive}
-							toggleIsActive={(isActive) => {
-								onDrawGrid(isActive, rowCoord, colCoord);
-							}}
-						/>
-					))}
-				</CellRow>
-			))}
-			<button onClick={setNextStep}>Next Step</button>
-			<button onClick={() => runSim()}>START</button>
-		</div>
+		<GameContainer>
+			<GridContainer>
+				{currentGrid.map((row, rowCoord) => (
+					<CellRow key={`row-${rowCoord}`}>
+						{row.map((cellIsActive, colCoord) => (
+							<Cell
+								key={`cell-${rowCoord}-${colCoord}`}
+								isActive={cellIsActive}
+								toggleIsActive={(isActive) => {
+									onDrawGrid(isActive, rowCoord, colCoord);
+								}}
+							/>
+						))}
+					</CellRow>
+				))}
+			</GridContainer>
+			<ButtonContainer>
+				<Button onClick={setNextStep}>NEXT STEP</Button>
+				<Button onClick={isRunning ? stopSim : startSim}>
+					{isRunning ? "STOP" : "START"}
+				</Button>
+			</ButtonContainer>
+		</GameContainer>
 	);
 };

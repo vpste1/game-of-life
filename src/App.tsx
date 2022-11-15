@@ -1,13 +1,17 @@
-import React from "react";
-import logo from "./logo.svg";
-import { Cell } from "./components/cell";
-import { Grid } from "./components/grid";
+import styled from "styled-components";
+import { Game } from "./components/game";
+
+const AppContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: centre;
+`;
 
 function App() {
 	return (
-		<>
-			<Grid />
-		</>
+		<AppContainer>
+			<Game />
+		</AppContainer>
 	);
 }
 
