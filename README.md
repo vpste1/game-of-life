@@ -17,3 +17,5 @@ At this point you should have a local dev version of the app running for develop
 Draw on the grid to add/remove living cells.
 
 Use the `Next Step` button to step through the simulation, or hit `Start` to let the simulation run undefinitely.
+
+![demo gif](./assets/demo.gif)
