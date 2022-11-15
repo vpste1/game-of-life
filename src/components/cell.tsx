@@ -1,17 +1,32 @@
-import { useState } from "react";
-import styles from "./cell.module.css";
+import styled from "styled-components";
 
-export const Cell = () => {
-	const [isActive, setIsActive] = useState(false);
+interface CellProps {
+	isActive: boolean;
+	toggleIsActive: (isActive: boolean) => void;
+}
+
+interface CellSpanProps {
+	isActive: boolean;
+}
+
+const StyledCell = styled.span<CellSpanProps>`
+  display: block;
+  height: 10px;
+  width: 10px;
+  border: 2px solid blue;
+  margin: 2px;
+  background-color: ${(props) => (props.isActive ? "blue" : "white")}
+`;
+
+export const Cell = ({ isActive, toggleIsActive }: CellProps) => {
 	return (
-		<span
+		<StyledCell
+			isActive={isActive}
 			draggable={false}
 			onMouseEnter={(event) => {
-				event.buttons === 1 && setIsActive(!isActive);
+				event.buttons === 1 && toggleIsActive(!isActive);
 			}}
-			onMouseDown={() => setIsActive(!isActive)}
-			className={`${isActive ? styles["active"] : styles["inactive"]}
-                  ${styles.cell}`}
+			onMouseDown={() => toggleIsActive(!isActive)}
 		/>
 	);
 };
