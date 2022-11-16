@@ -1,7 +1,7 @@
 import { Cell } from "./cell";
 import styled from "styled-components";
 import { useCallback, useState } from "react";
-import { countNumberOfNeighbours } from "../utils/grid_helper";
+import { countNumberOfNeighbours } from "../utils/grid-helper";
 
 const ROW_COUNT = 50;
 const COL_COUNT = 50;
