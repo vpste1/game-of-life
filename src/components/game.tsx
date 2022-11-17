@@ -29,7 +29,7 @@ const Button = styled.button`
 	border: 1px solid blue;
 	color: blue;
 	background: none;
-	margin: 16px 40px;
+	margin: 16px 20px;
 `;
 
 const EMPTY_ROW = new Array(COL_COUNT).fill(false);
@@ -117,10 +117,10 @@ export const Game = () => {
 				))}
 			</GridContainer>
 			<ButtonContainer>
-				<Button onClick={setNextStep}>NEXT STEP</Button>
 				<Button onClick={isRunning ? stopSim : startSim}>
 					{isRunning ? "STOP" : "START"}
 				</Button>
+				{!isRunning && <Button onClick={setNextStep}>NEXT STEP</Button>}
 			</ButtonContainer>
 		</GameContainer>
 	);
